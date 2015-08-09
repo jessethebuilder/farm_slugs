@@ -31,15 +31,6 @@ class ActiveRecord::Base
 
     validates id_method, :presence => true
 
-    validate do
-      #records cannot have simple integers for an id_method
-      errors.add id_method, "can't be a simple integer" if send(id_method).to_i.to_s == send(id_method).to_s
-
-      #reject if :id_method ends in "/edit" or "/edit/"
-      errors.add id_method, 'cannot end with the string "/edit" or "/edit/"' if send(id_method) =~ /\/edit\/?$/
-      # errors.add id_method, 'cannot simply be called "new"' if send(id_method).to_s.downcase == 'new'
-    end
-
     after_create{ |r| r.update_slug }
     #update :slug_method if a record is saved that has had changed made to the :id_method,
     #is NOT a new record, and if it passes validation
@@ -57,9 +48,14 @@ class ActiveRecord::Base
         # do any names specified in the reserved_name parameter of use_farm_slugs 
         reserved_names << 'new'
         reserved_names.each{ |name| return false if name == send(id_method) }
+        return false if slug_is_an_integer? 
         true
       end  
-      
+    
+      define_method(:slug_is_an_integer?) do
+        /\A\d+\Z/ =~ send(id_method) ? true : false
+      end     
+       
       define_method(:to_param) do
         self.send(slug_method)
       end

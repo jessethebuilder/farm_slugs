@@ -13,12 +13,6 @@ describe 'FarmSlugs' do
         fso.valid?
         fso.errors.messages[:name].include?("can't be blank").should == true
       end
-
-      it 'should validate that :id_method is not a simple integer' do
-        fso.name = '123'
-        fso.valid?
-        fso.errors.messages[:name].include?("can't be a simple integer").should == true
-      end
     end #end Validations
 
     it 'should save a parameterized version of :id_method to the :slug_method attribute' do
@@ -109,26 +103,36 @@ describe 'FarmSlugs' do
       fso_alt.url_slug.should == "reserved_#{fso_alt.id}"
     end
     
-    it "should not save a record name that ends in with '/edit' as a slug, but instead append the record's id" do
+    it "should not save a record name that ends in with '/edit' as a slug, but instead drops the slash" do
       fso.name = "A Name/edit"
-      fso.save
-      fso.slug.should == "a-name/edit_#{fso.id}"  
+      fso.save!
+      # fso.slug.should == "a-name_edit_#{fso.id}"  
+      fso.slug.should == "a-name-edit"  
     end
     
-    specifiy "similarly for '/edit/" do
+    specify "similarly for '/edit/" do
       fso.name = "A Name/edit/"
-      fso.save
-      fso.slug.should == "a-name/edit/_#{fso.id}"
+      fso.save!
+      fso.slug.should == "a-name-edit"
+      # fso.slug.should == "a-name_edit_#{fso.id}"
     end
-    
-    it "should save a record name that looks similar to '/edit" do
-      fso.name = "12345"
-      fso.save
-      fso.slug.should == "12345_#{fso.id}"
-    end
-    
+        
     it "should NOT save a record name as a slug that is a simple integer. It should save as integer_RECORD_ID" do
-      
+      fso.name = "12345"
+      fso.save!
+      fso.slug.should == "12345_#{fso.id}"      
+    end
+    
+    it "should save normally, if name begins with an integer, but contains letters too" do
+      fso.name = "12345 String"
+      fso.save!
+      fso.slug.should == "12345-string"
+    end
+    
+    it "should save normally a name that ends in an integer" do
+      fso.name = "String 12345"
+      fso.save!
+      fso.slug.should == 'string-12345'
     end
   end
 

@@ -24,7 +24,7 @@ you will get 2 messages added to errors on a presence missing error.
 
 Reserved names will still get saved as slugs, but with `_record.id` appended to the end of the name.
 
-'new', any name ending in '/edit' or '/edit/', and any name that is purely an integer are reserved.
+A Record named 'new', and any name that is purely an integer will generate a modified slug (parameterized-name_[record.id]).
 
 Names that already have a slug associated with them are reserved. If you have 2 stories called 'A Story', one will save a slug called
 'a-story' and the other will save as 'a-story_[record.id]. 
