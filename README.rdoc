@@ -22,12 +22,12 @@ to protect routes. See notes below.
 The id_method (defaults to :name) is validated for presence. If you validate for presence on that column in your model already,
 you will get 2 messages added to errors on a presence missing error. 
 
-Reserved names will still get saved as slugs, but with `_record.id` appended to the end of the name.
+Reserved names will still get saved as slugs, but with `_RECORD.id` appended to the end of the name.
 
-A Record named 'new', and any name that is purely an integer will generate a modified slug (parameterized-name_[record.id]).
+A Record named 'new', and any name that is purely an integer will generate a modified slug (parameterized-name_RECORD.id).
 
 Names that already have a slug associated with them are reserved. If you have 2 stories called 'A Story', one will save a slug called
-'a-story' and the other will save as 'a-story_[record.id]. 
+'a-story' and the other will save as 'a-story_RECORD.id. 
 
 
 This project uses MIT-LICENSE.
