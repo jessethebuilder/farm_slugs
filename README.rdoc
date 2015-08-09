@@ -1,4 +1,33 @@
 = FarmSlugs
 
+A simple way to use meaningful URLs for any ActiveRecord object. Simply call use_farm_slugs in your model.
 
-This project rocks and uses MIT-LICENSE.
+== Usage 
+
+Make sure you have a column called :slug and one called :name. These defaults can be changed (see below).
+
+Call `use_farm_slugs` in your model. 
+
+== Options
+
+Call `use_farm_slugs(:id_method => :method_name)` to change the name of the method FarmSlugs uses to name slugs
+
+Call `use_farm_slugs(:slug_method => :method_name)` to change the name of the method FarmSlugs uses to store slugs
+
+Call `use_farm_slugs(:reserved_names => [array of reserved names]` to prevent FarmSlugs from saving as certian names. This is done
+to protect routes. See notes below.
+
+== Notes
+
+The id_method (defaults to :name) is validated for presence. If you validate for presence on that column in your model already,
+you will get 2 messages added to errors on a presence missing error. 
+
+Reserved names will still get saved as slugs, but with `_record.id` appended to the end of the name.
+
+'new', any name ending in '/edit' or '/edit/', and any name that is purely an integer are reserved.
+
+Names that already have a slug associated with them are reserved. If you have 2 stories called 'A Story', one will save a slug called
+'a-story' and the other will save as 'a-story_[record.id]. 
+
+
+This project uses MIT-LICENSE.
