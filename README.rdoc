@@ -14,7 +14,7 @@ Call `use_farm_slugs(:id_method => :method_name)` to change the name of the meth
 
 Call `use_farm_slugs(:slug_method => :method_name)` to change the name of the method FarmSlugs uses to store slugs
 
-Call `use_farm_slugs(:reserved_names => [array of reserved names]` to prevent FarmSlugs from saving as certian names. This is done
+Call `use_farm_slugs(:reserved_names => [array of reserved names]` to prevent FarmSlugs from saving as certain names. This is done
 to protect routes. See notes below.
 
 == Notes
