@@ -1,0 +1,25 @@
+<%= form_for(@farm_slug_request_object) do |f| %>
+  <% if @farm_slug_request_object.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@farm_slug_request_object.errors.count, "error") %> prohibited this farm_slug_request_object from being saved:</h2>
+
+      <ul>
+      <% @farm_slug_request_object.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :caption %><br>
+    <%= f.text_field :caption %>
+  </div>
+  <div class="field">
+    <%= f.label :url_slug %><br>
+    <%= f.text_field :url_slug %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

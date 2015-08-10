@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Farm Slug Request Objects</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Caption</th>
+      <th>Url slug</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @farm_slug_request_objects.each do |farm_slug_request_object| %>
+      <tr>
+        <td><%= farm_slug_request_object.caption %></td>
+        <td><%= farm_slug_request_object.url_slug %></td>
+        <td><%= link_to 'Show', farm_slug_request_object %></td>
+        <td><%= link_to 'Edit', edit_farm_slug_request_object_path(farm_slug_request_object) %></td>
+        <td><%= link_to 'Destroy', farm_slug_request_object, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Farm slug request object', new_farm_slug_request_object_path %>

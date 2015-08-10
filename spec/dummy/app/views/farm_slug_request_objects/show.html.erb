@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Caption:</strong>
+  <%= @farm_slug_request_object.caption %>
+</p>
+
+<p>
+  <strong>Url slug:</strong>
+  <%= @farm_slug_request_object.url_slug %>
+</p>
+
+<%= link_to 'Edit', edit_farm_slug_request_object_path(@farm_slug_request_object) %> |
+<%= link_to 'Back', farm_slug_request_objects_path %>

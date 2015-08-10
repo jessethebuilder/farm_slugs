@@ -1,0 +1,2 @@
+module FarmSlugRequestObjectsHelper
+end
