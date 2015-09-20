@@ -8,11 +8,11 @@ describe 'FarmSlugs' do
   describe '#use_farm_slugs' do
 
     describe 'Validations' do
-      it 'should validate presence of :id_method' do
-        fso.name = nil
-        fso.valid?
-        fso.errors.messages[:name].include?("can't be blank").should == true
-      end
+      # it 'should validate presence of :id_method' do
+        # fso.name = nil
+        # fso.valid?
+        # fso.errors.messages[:name].include?("can't be blank").should == true
+      # end
     end #end Validations
 
     it 'should save a parameterized version of :id_method to the :slug_method attribute' do
@@ -48,11 +48,30 @@ describe 'FarmSlugs' do
       fso.slug.should == new_name.parameterize
     end
     
+    specify 'if no name is passed, the slug should save as [object_class_name]_[object.id]' do
+      fso.name = nil
+      fso.save
+      fso.slug.should == "farm-slug-object_#{fso.id}"
+    end
+    
+    specify 'name method value gets truncated at 100 characters' do
+      n = Faker::Lorem.characters(character_count = 100) 
+      fso.name = n
+      fso.save!
+      fso.slug.should == n.parameterize
+      
+      fso.name = "#{n}xxx"
+      fso.save!
+      fso.slug.should == "#{n.parameterize}_#{fso.id}"
+    end
+    
     describe 'Alternate Method Names' do
       it 'should work as expected if alternate method names are passed with use_farm_slugs' do
         # Alternate method names are set up in farm_slug_object_alt. They are "title" and "url_slug"
+        fso_alt.title = "A title goes here"
         fso_alt.save
         fso_alt.url_slug.should == fso_alt.title.parameterize
+        fso_alt.url_slug.should == 'a-title-goes-here'
       end
       
     end

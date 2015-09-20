@@ -39,20 +39,6 @@ describe 'Farm Slug Requests', :type => :feature do
         visit '/farm_slug_request_objects/new'
       end
 
-      it 'should not save and return to #new, if the :id_method (:caption, here) is not present' do
-        click_button 'Create'
-        current_path.should == '/farm_slug_request_objects'
-        page.should have_css('#new_farm_slug_request_object')
-      end
-
-      specify 'page should indicate why record was not saved' do
-        #Relies on the FarmTools way of showing validations errors. Please Re-sepc if you use a different strategy.
-        click_button 'Create'
-        within('#error_explanation') do
-          page.should have_content("Caption can't be blank")
-        end
-      end
-
       specify 'page should not have repeated warnings. This spec came up because of the tendency to validate the
                presence of the :id method on the Model, but that is already done on FarmSlugs' do
         click_button 'Create'
@@ -67,18 +53,6 @@ describe 'Farm Slug Requests', :type => :feature do
     let!(:fsto){ create :farm_slug_request_object }
     # let(:path){  }
 
-    describe 'Validation Errors while Editing' do
-      it 'should return the user to the edit page if a validation error occurs' do
-        path = "/farm_slug_request_objects/#{fsto.url_slug}"
-        visit "#{path}/edit"
-        fill_in 'Caption', with: ''
-        click_button 'Update'
 
-        current_path.should == path
-        within('#error_explanation') do
-          page.should have_content("Caption can't be blank")
-        end
-      end
-    end
   end
 end
