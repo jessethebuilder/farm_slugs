@@ -1,4 +1,4 @@
-require "farm_slugs/engine"
+  require "farm_slugs/engine"
 
 module FarmSlugs
 end
@@ -45,7 +45,7 @@ class ActiveRecord::Base
         # This is necessary to avoid route collision with slug names. "new" and names ending with "/edit" or "/edit/" fail, as
         # do any names specified in the reserved_name parameter of use_farm_slugs 
         reserved_names << 'new'
-        reserved_names.each{ |name| return false if name == send(id_method) }
+        reserved_names.each{ |name| return false if name.to_s.downcase == send(id_method).to_s.downcase }
         return false if slug_is_an_integer? 
         true
       end  
