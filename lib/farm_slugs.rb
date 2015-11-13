@@ -55,7 +55,7 @@ class ActiveRecord::Base
       end     
        
       define_method(:to_param) do
-        self.send(slug_method)
+        self.send(slug_method) || self.id
       end
 
       define_method(:update_slug) do
